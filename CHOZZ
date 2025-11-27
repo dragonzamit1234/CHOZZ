@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Website</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 80px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #dashboard {
+      display: none;
+      padding: 20px;
+    }
+    .file-post {
+      background: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="login-page" class="container">
+  <h2>Login</h2>
+  <input type="text" id="username" placeholder="Enter Username" />
+  <input type="password" id="password" placeholder="Enter Password" />
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <h2>Dashboard</h2>
+  <button onclick="logout()" style="background:#dc3545">Logout</button>
+
+  <h3>Post a File / Info</h3>
+  <input type="file" id="fileUpload" />
+  <button onclick="postFile()">Post</button>
+
+  <h3>Uploaded Files</h3>
+  <div id="fileList"></div>
+</div>
+
+<script>
+  function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if(username && password) {
+      document.getElementById('login-page').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+    } else {
+      alert('Please enter valid credentials');
+    }
+  }
+
+  function logout() {
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('login-page').style.display = 'block';
+  }
+
+  function postFile() {
+    const fileInput = document.getElementById('fileUpload');
+    if(fileInput.files.length === 0) {
+      alert('Please select a file');
+      return;
+    }
+
+    const file = fileInput.files[0];
+    const fileList = document.getElementById('fileList');
+
+    const div = document.createElement('div');
+    div.className = 'file-post';
+    div.innerHTML = `<strong>${file.name}</strong>`;
+
+    fileList.appendChild(div);
+    fileInput.value = '';
+  }
+</script>
+
+</body>
+</html>
