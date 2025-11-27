@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MySite — Main</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">MySite</div>
+    <div class="actions">
+      <span id="welcome"></span>
+      <button id="logoutBtn" class="btn small">Log out</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Main Page</h2>
+      <p>This page is visible only if you signed in.</p>
+
+      <!-- Open a new tab / new window -->
+      <p>
+        <a id="openNewTab" href="https://example.com" target="_blank" rel="noopener">Open example.com in a new tab</a>
+      </p>
+
+      <!-- Or use JS to open a new tab to a specific internal or external page -->
+      <p>
+        <button id="openTabBtn" class="btn">Open Dashboard in new tab</button>
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // Protect the page: redirect to login if not logged in
+    if (localStorage.getItem('mySiteLoggedIn') !== '1') {
+      // ensure clean redirect
+      window.location.href = 'index.html';
+    } else {
+      const user = localStorage.getItem('mySiteUser') || 'User';
+      document.getElementById('welcome').textContent = 'Hi, ' + user;
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', function(){
+      localStorage.removeItem('mySiteLoggedIn');
+      localStorage.removeItem('mySiteUser');
+      window.location.href = 'index.html';
+    });
+
+    document.getElementById('openTabBtn').addEventListener('click', function(){
+      // opens main-dashboard.html in a new tab (create file if needed) or external URL
+      window.open('https://example.com', '_blank', 'noopener');
+    });
+  </script>
+</body>
+</html>
